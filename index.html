@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1a1129">
-<meta name="description" content="متجر نيولا — تسوّق أحدث الملابس والإكسسوارات والألعاب بأفضل الأسعار">
+<meta name="description" content="NYALA Store — Shop the latest clothing, accessories and toys">
 <title>متجر نيولا | NYALA Store</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -154,9 +154,36 @@ a { color: inherit; }
 .icon-btn:hover { background: #f2efe9; color: var(--secondary); }
 .icon-btn:active { transform: scale(0.92); }
 
+.lang-switch {
+    display: flex;
+    align-items: center;
+    background: #f2efe9;
+    border-radius: 50px;
+    padding: 3px;
+    border: 1.5px solid var(--border);
+    margin-inline-end: 4px;
+}
+.lang-switch button {
+    border: none;
+    background: transparent;
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 0.78rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: var(--transition);
+    font-family: inherit;
+}
+.lang-switch button.active {
+    background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(162,57,202,0.3);
+}
+
 .badge {
     position: absolute;
-    top: 2px; left: 2px;
+    top: 2px; inset-inline-start: 2px;
     background: var(--danger); color: #fff;
     border-radius: 50%;
     min-width: 20px; height: 20px;
@@ -193,7 +220,7 @@ a { color: inherit; }
     position: absolute;
     width: 400px; height: 400px;
     background: radial-gradient(circle, rgba(245,166,35,0.35) 0%, transparent 70%);
-    top: -100px; left: -100px;
+    top: -100px; inset-inline-start: -100px;
     border-radius: 50%;
     animation: float 8s ease-in-out infinite;
 }
@@ -202,7 +229,7 @@ a { color: inherit; }
     position: absolute;
     width: 320px; height: 320px;
     background: radial-gradient(circle, rgba(229,183,59,0.3) 0%, transparent 70%);
-    bottom: -120px; right: -80px;
+    bottom: -120px; inset-inline-end: -80px;
     border-radius: 50%;
     animation: float 10s ease-in-out infinite reverse;
 }
@@ -368,7 +395,7 @@ a { color: inherit; }
 
 .badge-discount {
     position: absolute;
-    top: 12px; right: 12px;
+    top: 12px; inset-inline-end: 12px;
     background: linear-gradient(135deg, #ff6b6b, #e74c3c);
     color: #fff;
     padding: 5px 12px;
@@ -393,7 +420,7 @@ a { color: inherit; }
 
 .wishlist-btn {
     position: absolute;
-    top: 12px; left: 12px;
+    top: 12px; inset-inline-start: 12px;
     width: 38px; height: 38px;
     border-radius: 50%;
     background: rgba(255,255,255,0.95);
@@ -708,7 +735,7 @@ a { color: inherit; }
 }
 .footer-social a:hover { background: var(--secondary); color: #fff; }
 
-/* ============ Drawers ============ */
+/* ============ Drawers (direction-aware) ============ */
 .drawer-overlay {
     position: fixed;
     inset: 0;
@@ -722,20 +749,23 @@ a { color: inherit; }
 
 .drawer {
     position: fixed;
-    top: 0; left: 0;
+    top: 0;
     width: 100%;
     max-width: 420px;
     height: 100vh;
     height: 100dvh;
     background: #fff;
     z-index: 1001;
-    transform: translateX(-100%);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
-    box-shadow: 4px 0 30px rgba(0,0,0,0.2);
+    box-shadow: 0 0 30px rgba(0,0,0,0.2);
 }
-.drawer.open { transform: translateX(0); }
+/* RTL: drawer from left (start). LTR: from right (end) */
+html[dir="rtl"] .drawer { left: 0; transform: translateX(-100%); }
+html[dir="ltr"] .drawer { right: 0; transform: translateX(100%); }
+html[dir="rtl"] .drawer.open,
+html[dir="ltr"] .drawer.open { transform: translateX(0); }
 
 .drawer-header {
     padding: 18px 20px;
@@ -997,7 +1027,7 @@ a { color: inherit; }
 .quick-view-img img { width: 100%; height: 100%; object-fit: cover; }
 .quick-view-info h2 { font-family: 'Alexandria'; font-size: 1.3rem; color: var(--primary); margin-bottom: 8px; }
 .quick-view-info .qv-price { font-size: 1.6rem; font-weight: 900; color: var(--secondary); margin: 10px 0; }
-.quick-view-info .qv-price .old { font-size: 1rem; color: #aaa; text-decoration: line-through; margin-right: 8px; }
+.quick-view-info .qv-price .old { font-size: 1rem; color: #aaa; text-decoration: line-through; margin-inline-end: 8px; }
 .quick-view-info .qv-desc { font-size: 0.92rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
 .quick-view-info .qv-meta {
     display: flex;
@@ -1142,7 +1172,7 @@ a { color: inherit; }
     border-radius: 6px;
     font-size: 0.75rem;
     cursor: pointer;
-    margin-right: 6px;
+    margin-inline-end: 6px;
     font-weight: 700;
 }
 
@@ -1254,7 +1284,7 @@ a { color: inherit; }
 .toast-container {
     position: fixed;
     bottom: calc(24px + env(safe-area-inset-bottom));
-    right: 24px;
+    inset-inline-end: 24px;
     z-index: 9999;
     display: flex;
     flex-direction: column;
@@ -1277,6 +1307,7 @@ a { color: inherit; }
     max-width: 340px;
     pointer-events: auto;
 }
+html[dir="rtl"] .toast { transform: translateX(-120%); }
 .toast.show { transform: translateX(0); }
 .toast.success { background: linear-gradient(135deg, #27ae60, #1e8449); }
 .toast.error { background: linear-gradient(135deg, #e74c3c, #c0392b); }
@@ -1287,7 +1318,7 @@ a { color: inherit; }
 .float-wa {
     position: fixed;
     bottom: calc(80px + env(safe-area-inset-bottom));
-    left: 20px;
+    inset-inline-start: 20px;
     width: 56px; height: 56px;
     background: linear-gradient(135deg, #25d366 0%, #1eb854 100%);
     color: #fff;
@@ -1311,7 +1342,7 @@ a { color: inherit; }
 .float-top {
     position: fixed;
     bottom: calc(80px + env(safe-area-inset-bottom));
-    right: 20px;
+    inset-inline-end: 20px;
     width: 46px; height: 46px;
     background: #fff;
     color: var(--primary);
@@ -1370,7 +1401,7 @@ a { color: inherit; }
 .bottom-nav-item:active { transform: scale(0.9); }
 .bottom-nav-item .badge {
     position: absolute;
-    top: 2px; left: 10px;
+    top: 2px; inset-inline-start: 10px;
     min-width: 16px; height: 16px;
     font-size: 0.6rem;
 }
@@ -1399,10 +1430,11 @@ a { color: inherit; }
     .quick-view-img { max-height: 260px; }
     .float-wa { width: 50px; height: 50px; font-size: 1.3rem; }
     .float-top { bottom: calc(76px + env(safe-area-inset-bottom)); }
-    .toast-container { right: 12px; left: 12px; bottom: calc(80px + env(safe-area-inset-bottom)); }
+    .toast-container { inset-inline-end: 12px; inset-inline-start: 12px; bottom: calc(80px + env(safe-area-inset-bottom)); }
     .toast { max-width: 100%; }
     .footer { margin-bottom: calc(var(--bottom-nav-h) + 20px); }
     .bottom-nav { display: flex; }
+    .lang-switch { margin-inline-end: 0; }
 }
 
 @media (max-width: 480px) {
@@ -1422,27 +1454,31 @@ a { color: inherit; }
 
 <!-- Announcement -->
 <div class="announcement" id="announcementBar">
-    <span>🚚 شحن مجاني للطلبات فوق <strong id="announcementFreeMin">500 ₺</strong> — تسوّق الآن واستفد من العروض!</span>
+    <span data-i18n="announcement">🚚 شحن مجاني للطلبات فوق <strong id="announcementFreeMin">500 ₺</strong> — تسوّق الآن واستفد من العروض!</span>
 </div>
 
 <!-- Navbar -->
 <nav class="navbar">
     <a href="#" class="brand" onclick="scrollToTop(event)">
         <img id="brandLogo" src="https://placehold.co/44x44/f5a623/2a1b3d?text=NY" alt="NYALA" loading="eager">
-        <span id="brandName">نيولا</span>
+        <span id="brandName">NYALA</span>
     </a>
 
     <div class="search-box">
         <i class="fas fa-search"></i>
-        <input type="text" id="searchInput" placeholder="ابحث عن منتج..." autocomplete="off">
+        <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="ابحث عن منتج..." autocomplete="off">
     </div>
 
     <div class="nav-actions">
-        <button class="icon-btn" onclick="toggleWishlist()" title="المفضلة" aria-label="المفضلة">
+        <div class="lang-switch" id="langSwitch">
+            <button type="button" data-lang="ar" class="active" onclick="setLanguage('ar')">AR</button>
+            <button type="button" data-lang="tr" onclick="setLanguage('tr')">TR</button>
+        </div>
+        <button class="icon-btn" onclick="toggleWishlist()" data-i18n-title="wishlist" title="المفضلة" aria-label="Wishlist">
             <i class="fas fa-heart"></i>
             <span class="badge" id="wishlistBadge">0</span>
         </button>
-        <button class="icon-btn" onclick="toggleCart()" title="السلة" aria-label="السلة">
+        <button class="icon-btn" onclick="toggleCart()" data-i18n-title="cart" title="السلة" aria-label="Cart">
             <i class="fas fa-shopping-bag"></i>
             <span class="badge" id="cartBadge">0</span>
         </button>
@@ -1453,18 +1489,18 @@ a { color: inherit; }
 <div class="mobile-search">
     <div class="search-box">
         <i class="fas fa-search"></i>
-        <input type="text" id="searchInputMobile" placeholder="ابحث عن منتج..." autocomplete="off">
+        <input type="text" id="searchInputMobile" data-i18n-placeholder="search_placeholder" placeholder="ابحث عن منتج..." autocomplete="off">
     </div>
 </div>
 
 <!-- Hero -->
 <section class="hero">
     <div class="hero-content">
-        <div class="hero-badge">✨ تشكيلة جديدة 2025</div>
-        <h1>تسوّق بذكاء، <span>بأسلوبك</span></h1>
-        <p>اكتشف أحدث الملابس والإكسسوارات والألعاب بجودة عالية وأسعار منافسة.</p>
+        <div class="hero-badge" data-i18n="hero_badge">✨ تشكيلة جديدة 2025</div>
+        <h1 data-i18n-html="hero_title">تسوّق بذكاء، <span>بأسلوبك</span></h1>
+        <p data-i18n="hero_desc">اكتشف أحدث الملابس والإكسسوارات والألعاب بجودة عالية وأسعار منافسة.</p>
         <a href="#productsGrid" class="btn-hero" onclick="document.getElementById('productsGrid').scrollIntoView({behavior:'smooth'}); return false;">
-            <i class="fas fa-shopping-bag"></i> تسوّق الآن
+            <i class="fas fa-shopping-bag"></i> <span data-i18n="shop_now">تسوّق الآن</span>
         </a>
     </div>
 </section>
@@ -1478,11 +1514,11 @@ a { color: inherit; }
 <div class="toolbar">
     <div class="results-count" id="resultsCount">جاري التحميل...</div>
     <select class="sort-select" id="sortSelect" onchange="applySort(this.value)">
-        <option value="default">ترتيب افتراضي</option>
-        <option value="price-asc">السعر: الأقل أولاً</option>
-        <option value="price-desc">السعر: الأعلى أولاً</option>
-        <option value="name-asc">الاسم: أ - ي</option>
-        <option value="discount">أعلى خصم</option>
+        <option value="default" data-i18n="sort_default">ترتيب افتراضي</option>
+        <option value="price-asc" data-i18n="sort_price_asc">السعر: الأقل أولاً</option>
+        <option value="price-desc" data-i18n="sort_price_desc">السعر: الأعلى أولاً</option>
+        <option value="name-asc" data-i18n="sort_name">الاسم: أ - ي</option>
+        <option value="discount" data-i18n="sort_discount">أعلى خصم</option>
     </select>
 </div>
 
@@ -1491,7 +1527,7 @@ a { color: inherit; }
 
 <!-- Recently Viewed -->
 <div class="recent-section" id="recentSection">
-    <div class="recent-title"><i class="fas fa-clock-rotate-left"></i> شاهدتها مؤخراً</div>
+    <div class="recent-title"><i class="fas fa-clock-rotate-left"></i> <span data-i18n="recently_viewed">شاهدتها مؤخراً</span></div>
     <div class="recent-scroll" id="recentScroll"></div>
 </div>
 
@@ -1499,25 +1535,25 @@ a { color: inherit; }
 <footer class="footer">
     <div class="footer-grid">
         <div class="footer-col">
-            <h4 id="footerStoreName">متجر نيولا</h4>
-            <p>وجهتك الأولى للملابس والإكسسوارات والألعاب بجودة عالية وأسعار تنافسية.</p>
+            <h4 id="footerStoreName">NYALA</h4>
+            <p data-i18n="footer_about">وجهتك الأولى للملابس والإكسسوارات والألعاب بجودة عالية وأسعار تنافسية.</p>
             <div class="footer-social">
-                <a href="#" id="footerWa" target="_blank" title="واتساب"><i class="fab fa-whatsapp"></i></a>
-                <a href="#" title="انستغرام"><i class="fab fa-instagram"></i></a>
-                <a href="#" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" id="footerWa" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
             </div>
         </div>
         <div class="footer-col">
-            <h4>روابط سريعة</h4>
-            <a href="#" onclick="document.getElementById('productsGrid').scrollIntoView({behavior:'smooth'}); return false;">المنتجات</a>
-            <a href="#" onclick="resetFilters(); return false;">جميع الفئات</a>
-            <a href="#" id="footerWaContact" onclick="openWhatsApp(); return false;">تواصل معنا</a>
+            <h4 data-i18n="footer_quick_links">روابط سريعة</h4>
+            <a href="#" onclick="document.getElementById('productsGrid').scrollIntoView({behavior:'smooth'}); return false;" data-i18n="products">المنتجات</a>
+            <a href="#" onclick="resetFilters(); return false;" data-i18n="all_categories">جميع الفئات</a>
+            <a href="#" id="footerWaContact" onclick="openWhatsApp(); return false;" data-i18n="contact_us">تواصل معنا</a>
         </div>
         <div class="footer-col">
-            <h4>خدمة العملاء</h4>
-            <p id="footerPhone"><i class="fas fa-phone"></i> اتصل: +90 555 019 6682</p>
-            <p><i class="fas fa-clock"></i> ساعات العمل: 9ص - 9م</p>
-            <p><i class="fas fa-truck"></i> شحن سريع لجميع المدن</p>
+            <h4 data-i18n="footer_support">خدمة العملاء</h4>
+            <p id="footerPhone"><i class="fas fa-phone"></i> +90 555 019 6682</p>
+            <p><i class="fas fa-clock"></i> <span data-i18n="working_hours">ساعات العمل: 9ص - 9م</span></p>
+            <p><i class="fas fa-truck"></i> <span data-i18n="fast_shipping">شحن سريع لجميع المدن</span></p>
         </div>
     </div>
     <div class="footer-bottom">
@@ -1529,125 +1565,113 @@ a { color: inherit; }
 <nav class="bottom-nav">
     <button class="bottom-nav-item active" onclick="window.scrollTo({top:0,behavior:'smooth'})">
         <i class="fas fa-home"></i>
-        <span>الرئيسية</span>
+        <span data-i18n="home">الرئيسية</span>
     </button>
     <button class="bottom-nav-item" onclick="focusMobileSearch()">
         <i class="fas fa-search"></i>
-        <span>بحث</span>
+        <span data-i18n="search">بحث</span>
     </button>
     <button class="bottom-nav-item" onclick="toggleCart()">
         <i class="fas fa-shopping-bag"></i>
-        <span>السلة</span>
+        <span data-i18n="cart">السلة</span>
         <span class="badge" id="cartBadgeBottom">0</span>
     </button>
     <button class="bottom-nav-item" onclick="toggleWishlist()">
         <i class="fas fa-heart"></i>
-        <span>المفضلة</span>
+        <span data-i18n="wishlist">المفضلة</span>
         <span class="badge" id="wishlistBadgeBottom">0</span>
-    </button>
-    <button class="bottom-nav-item" onclick="openWhatsApp()">
-        <i class="fab fa-whatsapp"></i>
-        <span>تواصل</span>
     </button>
 </nav>
 
-<!-- Floating -->
-<a href="#" id="floatWaBtn" target="_blank" class="float-wa" title="تواصل عبر واتساب">
-    <i class="fab fa-whatsapp"></i>
-</a>
-<button class="float-top" id="floatTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="العودة للأعلى">
-    <i class="fas fa-arrow-up"></i>
-</button>
-
 <!-- Cart Drawer -->
 <div class="drawer-overlay" id="cartOverlay" onclick="toggleCart()"></div>
-<div class="drawer" id="cartDrawer">
+<aside class="drawer" id="cartDrawer">
     <div class="drawer-header">
-        <h3><i class="fas fa-shopping-bag" style="color:var(--secondary)"></i> سلة التسوق</h3>
-        <button class="drawer-close" onclick="toggleCart()">✕</button>
+        <h3><i class="fas fa-shopping-bag"></i> <span data-i18n="cart">السلة</span></h3>
+        <button class="drawer-close" onclick="toggleCart()"><i class="fas fa-times"></i></button>
     </div>
-    <div class="free-ship-bar" id="freeShipBar"></div>
+    <div class="free-ship-bar" id="freeShipBar" style="display:none;"></div>
     <div class="drawer-body" id="cartItems"></div>
-    <div class="drawer-footer" id="cartFooter">
+    <div class="drawer-footer" id="cartFooter" style="display:none;">
         <div class="total-row">
-            <span class="label">المجموع</span>
+            <span class="label" data-i18n="total">الإجمالي</span>
             <span class="amount" id="cartTotal">0 ₺</span>
         </div>
         <button class="checkout-btn" onclick="openCheckout()">
-            <i class="fas fa-credit-card"></i> إتمام الطلب
+            <i class="fas fa-credit-card"></i> <span data-i18n="checkout">إتمام الطلب</span>
         </button>
     </div>
-</div>
+</aside>
 
 <!-- Wishlist Drawer -->
 <div class="drawer-overlay" id="wishlistOverlay" onclick="toggleWishlist()"></div>
-<div class="drawer" id="wishlistDrawer">
+<aside class="drawer" id="wishlistDrawer">
     <div class="drawer-header">
-        <h3><i class="fas fa-heart" style="color:var(--danger)"></i> المفضلة</h3>
-        <button class="drawer-close" onclick="toggleWishlist()">✕</button>
+        <h3><i class="fas fa-heart"></i> <span data-i18n="wishlist">المفضلة</span></h3>
+        <button class="drawer-close" onclick="toggleWishlist()"><i class="fas fa-times"></i></button>
     </div>
     <div class="drawer-body" id="wishlistItems"></div>
-</div>
+</aside>
 
-<!-- Quick View -->
+<!-- Quick View Modal -->
 <div class="modal-overlay" id="quickViewModal">
     <div class="modal modal-quick">
         <div class="modal-header">
-            <h2>تفاصيل المنتج</h2>
-            <button class="drawer-close" onclick="closeQuickView()">×</button>
+            <h2 data-i18n="quick_view">نظرة سريعة</h2>
+            <button class="drawer-close" onclick="closeQuickView()"><i class="fas fa-times"></i></button>
         </div>
         <div class="modal-body" id="quickViewContent"></div>
     </div>
 </div>
 
-<!-- Checkout -->
+<!-- Checkout Modal -->
 <div class="modal-overlay" id="checkoutModal">
     <div class="modal">
         <div class="modal-header">
-            <h2 id="checkoutTitle">إتمام الطلب</h2>
-            <button class="drawer-close" onclick="closeCheckout()">×</button>
+            <h2 id="checkoutTitle" data-i18n="checkout">إتمام الطلب</h2>
+            <button class="drawer-close" onclick="closeCheckout()"><i class="fas fa-times"></i></button>
         </div>
         <div class="modal-body" id="checkoutBody">
             <div id="checkoutFormBody">
                 <div class="order-summary" id="orderSummary"></div>
 
                 <div class="form-group">
-                    <label>الاسم الكامل <span class="required">*</span></label>
-                    <input type="text" id="custName" placeholder="اسمك الكامل" autocomplete="name">
-                    <div class="field-error" id="errName">الاسم مطلوب (حرفان على الأقل)</div>
+                    <label><span data-i18n="full_name">الاسم الكامل</span> <span class="required">*</span></label>
+                    <input type="text" id="custName" data-i18n-placeholder="name_placeholder" placeholder="أدخل اسمك">
+                    <div class="field-error" id="errName" data-i18n="err_name">يرجى إدخال اسم صحيح</div>
                 </div>
                 <div class="form-group">
-                    <label>رقم الهاتف <span class="required">*</span></label>
-                    <input type="tel" id="custPhone" placeholder="05xxxxxxxx" autocomplete="tel">
-                    <div class="field-error" id="errPhone">رقم الهاتف مطلوب</div>
+                    <label><span data-i18n="phone">رقم الهاتف</span> <span class="required">*</span></label>
+                    <input type="tel" id="custPhone" data-i18n-placeholder="phone_placeholder" placeholder="05XXXXXXXX" dir="ltr">
+                    <div class="field-error" id="errPhone" data-i18n="err_phone">يرجى إدخال رقم هاتف صحيح</div>
                 </div>
                 <div class="form-group">
-                    <label>العنوان / المدينة <span class="required">*</span></label>
-                    <textarea id="custAddress" rows="2" placeholder="المدينة، الحي، الشارع، رقم المبنى..."></textarea>
-                    <div class="field-error" id="errAddress">العنوان مطلوب (5 أحرف على الأقل)</div>
+                    <label><span data-i18n="address">العنوان</span> <span class="required">*</span></label>
+                    <textarea id="custAddress" data-i18n-placeholder="address_placeholder" placeholder="المدينة، الحي، الشارع، رقم المبنى"></textarea>
+                    <div class="field-error" id="errAddress" data-i18n="err_address">يرجى إدخال عنوان تفصيلي</div>
                 </div>
                 <div class="form-group">
-                    <label>ملاحظات إضافية (اختياري)</label>
-                    <textarea id="custNotes" rows="2" placeholder="أي ملاحظات للطلب..."></textarea>
+                    <label data-i18n="notes">ملاحظات (اختياري)</label>
+                    <textarea id="custNotes" data-i18n-placeholder="notes_placeholder" placeholder="أي ملاحظات إضافية"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label>طريقة الدفع <span class="required">*</span></label>
-                    <div class="payment-options" id="paymentOptions">
+                    <label data-i18n="payment_method">طريقة الدفع</label>
+                    <div class="payment-options">
                         <label class="payment-option selected" data-method="cod">
                             <input type="radio" name="payMethod" value="cod" checked>
                             <span class="icon">💵</span>
                             <span class="text">
-                                <strong>الدفع عند الاستلام</strong>
-                                <small>ادفع نقداً عند وصول الطلب</small>
+                                <strong data-i18n="cod">الدفع عند الاستلام</strong>
+                                <small data-i18n="cod_desc">ادفع عند استلام طلبك</small>
                             </span>
                         </label>
                         <label class="payment-option" data-method="bank">
                             <input type="radio" name="payMethod" value="bank">
                             <span class="icon">🏦</span>
                             <span class="text">
-                                <strong>تحويل بنكي</strong>
-                                <small>حوّل المبلغ ثم أرسل الإيصال</small>
+                                <strong data-i18n="bank_transfer">تحويل بنكي</strong>
+                                <small data-i18n="bank_desc">حوّل المبلغ ثم أرسل الإيصال</small>
                             </span>
                         </label>
                     </div>
@@ -1659,7 +1683,7 @@ a { color: inherit; }
         </div>
         <div class="modal-footer" id="checkoutFooter">
             <button class="submit-order-btn" onclick="submitOrder(this)">
-                <i class="fas fa-paper-plane"></i> إرسال الطلب
+                <i class="fas fa-paper-plane"></i> <span data-i18n="submit_order">إرسال الطلب</span>
             </button>
         </div>
     </div>
@@ -1668,47 +1692,35 @@ a { color: inherit; }
 <!-- Toast -->
 <div class="toast-container" id="toastContainer"></div>
 
+<!-- Floating WhatsApp -->
+<a href="#" class="float-wa" id="floatWaBtn" target="_blank" title="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+<button class="float-top" id="floatTop" onclick="scrollToTop()">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
 <script>
-// ---- كود الحماية ومنع الوصول لأدوات المطور ----
+/* ============================================================
+   PROTECTION (basic)
+   ============================================================ */
 (function () {
   "use strict";
-
-  // منع F12 واختصارات أدوات المطور وعرض المصدر
   document.addEventListener('keydown', function (e) {
-    // F12
-    if (e.key === 'F12' || e.keyCode === 123) {
-      e.preventDefault();
-      return false;
-    }
-    // Ctrl+Shift+I / J / C
-    if (e.ctrlKey && e.shiftKey &&
-        (e.key === 'I' || e.key === 'i' ||
-         e.key === 'J' || e.key === 'j' ||
-         e.key === 'C' || e.key === 'c')) {
-      e.preventDefault();
-      return false;
-    }
-    // Ctrl+U (عرض المصدر)
-    if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) {
-      e.preventDefault();
-      return false;
-    }
+    if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); return false; }
+    if (e.ctrlKey && e.shiftKey && ['I','i','J','j','C','c'].includes(e.key)) { e.preventDefault(); return false; }
+    if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) { e.preventDefault(); return false; }
   }, true);
-
-  // منع النقر بزر الماوس الأيمن (بدون alert)
-  document.addEventListener('contextmenu', function (e) {
-    e.preventDefault();
-    return false;
-  }, true);
-
+  document.addEventListener('contextmenu', function (e) { e.preventDefault(); return false; }, true);
 })();
-// ---- نهاية كود الحماية ----
+
 /* ============================================================
    CONFIG
    ============================================================ */
-const APPS_SCRIPT_URL  = 'https://script.google.com/macros/s/AKfycby9SMtvoIO80BCnjOaEdFlPUHSsqg3ld03NmpkgohW6KnuOM6YWxaP6MKIbsC_0KFYDoQ/exec';
+const APPS_SCRIPT_URL  = 'https://script.google.com/macros/s/AKfycbwGor7iCjTzoiwQWYdWHGk1U8kZppi7H9qO3NbfE9zUnweLDkDl72NHVsI48h9gPDTenA/exec';
 const CACHE_KEY        = 'nyala_products_cache_v2';
 const SETTINGS_CACHE   = 'nyala_settings_cache';
+const LANG_KEY         = 'nyala_lang';
 const CACHE_TTL        = 5 * 60 * 1000;
 
 const DEFAULT_SETTINGS = {
@@ -1721,8 +1733,284 @@ const DEFAULT_SETTINGS = {
     bank_name: '',
     bank_holder: '',
     bank_iban: '',
-    categories: '["ملابس","إكسسوارات","ألعاب"]'
+    categories: JSON.stringify([
+        {ar:'ملابس',tr:'Giyim'},
+        {ar:'إكسسوارات',tr:'Aksesuar'},
+        {ar:'ألعاب',tr:'Oyuncak'}
+    ])
 };
+
+/* ============================================================
+   I18N — Arabic & Turkish
+   ============================================================ */
+const I18N = {
+  ar: {
+    announcement: '🚚 شحن مجاني للطلبات فوق <strong id="announcementFreeMin">500 ₺</strong> — تسوّق الآن واستفد من العروض!',
+    search_placeholder: 'ابحث عن منتج...',
+    wishlist: 'المفضلة',
+    cart: 'السلة',
+    hero_badge: '✨ تشكيلة جديدة 2025',
+    hero_title: 'تسوّق بذكاء، <span>بأسلوبك</span>',
+    hero_desc: 'اكتشف أحدث الملابس والإكسسوارات والألعاب بجودة عالية وأسعار منافسة.',
+    shop_now: 'تسوّق الآن',
+    all: 'الكل',
+    sort_default: 'ترتيب افتراضي',
+    sort_price_asc: 'السعر: الأقل أولاً',
+    sort_price_desc: 'السعر: الأعلى أولاً',
+    sort_name: 'الاسم: أ - ي',
+    sort_discount: 'أعلى خصم',
+    products_count: '{n} منتج متوفر',
+    no_products: 'لا توجد منتجات',
+    no_products_hint: 'جرّب تغيير البحث أو الفئة',
+    show_all: 'عرض كل المنتجات',
+    recently_viewed: 'شاهدتها مؤخراً',
+    footer_about: 'وجهتك الأولى للملابس والإكسسوارات والألعاب بجودة عالية وأسعار تنافسية.',
+    footer_quick_links: 'روابط سريعة',
+    products: 'المنتجات',
+    all_categories: 'جميع الفئات',
+    contact_us: 'تواصل معنا',
+    footer_support: 'خدمة العملاء',
+    working_hours: 'ساعات العمل: 9ص - 9م',
+    fast_shipping: 'شحن سريع لجميع المدن',
+    home: 'الرئيسية',
+    search: 'بحث',
+    total: 'الإجمالي',
+    checkout: 'إتمام الطلب',
+    cart_empty_title: 'سلتك فارغة',
+    cart_empty_desc: 'أضف بعض المنتجات لتبدأ التسوق',
+    browse_products: 'تصفّح المنتجات',
+    wishlist_empty_title: 'لا توجد مفضلات',
+    wishlist_empty_desc: 'اضغط على القلب في أي منتج لإضافته هنا',
+    quick_view: 'نظرة سريعة',
+    add_to_cart: 'أضف للسلة',
+    add_more: 'أضف المزيد',
+    out_of_stock: 'نفذ المخزون',
+    out: 'نفذ',
+    available: 'متوفر',
+    last_pieces: 'آخر {n} قطع!',
+    free_shipping_add: 'أضف <strong>{price}</strong> للشحن المجاني',
+    free_shipping_done: '🎉 شحن مجاني!',
+    full_name: 'الاسم الكامل',
+    phone: 'رقم الهاتف',
+    address: 'العنوان',
+    notes: 'ملاحظات (اختياري)',
+    payment_method: 'طريقة الدفع',
+    cod: 'الدفع عند الاستلام',
+    cod_desc: 'ادفع عند استلام طلبك',
+    bank_transfer: 'تحويل بنكي',
+    bank_desc: 'حوّل المبلغ ثم أرسل الإيصال',
+    submit_order: 'إرسال الطلب',
+    name_placeholder: 'أدخل اسمك',
+    phone_placeholder: '05XXXXXXXX',
+    address_placeholder: 'المدينة، الحي، الشارع، رقم المبنى',
+    notes_placeholder: 'أي ملاحظات إضافية',
+    err_name: 'يرجى إدخال اسم صحيح',
+    err_phone: 'يرجى إدخال رقم هاتف صحيح',
+    err_address: 'يرجى إدخال عنوان تفصيلي',
+    order_success_title: 'شكراً لك! تم استلام طلبك',
+    order_success_msg: 'سنقوم بمراجعة طلبك والتواصل معك على <strong>{phone}</strong> قريباً.',
+    download_invoice: 'تحميل الفاتورة',
+    print_invoice: 'طباعة / PDF',
+    back_to_store: 'العودة للمتجر',
+    unit_price: 'للقطعة',
+    category: 'الفئة',
+    stock: 'المخزون',
+    loading: 'جاري التحميل...',
+    toast_added: 'تمت الإضافة للسلة',
+    toast_wishlist_add: 'أُضيف للمفضلة ❤️',
+    toast_wishlist_remove: 'حُذف من المفضلة',
+    toast_removed: 'تم الحذف من السلة',
+    toast_out: 'المنتج غير متوفر',
+    toast_stock: 'الكمية استُنفدت',
+    toast_over_stock: 'تجاوز المخزون',
+    toast_empty_cart: 'السلة فارغة',
+    toast_fill_fields: 'يرجى تعبئة الحقول المطلوبة',
+    toast_order_fail: 'فشل إرسال الطلب، حاول مرة أخرى',
+    toast_copied: 'تم النسخ',
+    toast_cache: 'عرض آخر نسخة من المنتجات',
+    toast_demo: 'تعذر التحميل — عرض تجريبي',
+    bank_info: 'بيانات التحويل',
+    bank_name: 'البنك',
+    bank_holder: 'صاحب الحساب',
+    iban: 'IBAN',
+    copy: 'نسخ',
+    no_bank: 'لم تُضف بيانات بنكية بعد. تواصل معنا للتفاصيل.',
+    copyright: '© {year} {store} — جميع الحقوق محفوظة',
+    general: 'عام',
+  },
+  tr: {
+    announcement: '🚚 {min} üzeri siparişlerde ücretsiz kargo — Hemen alışverişe başla!',
+    search_placeholder: 'Ürün ara...',
+    wishlist: 'Favoriler',
+    cart: 'Sepet',
+    hero_badge: '✨ 2025 Yeni Koleksiyon',
+    hero_title: 'Akıllı alışveriş, <span>tarzınla</span>',
+    hero_desc: 'En yeni giyim, aksesuar ve oyuncakları yüksek kalite ve rekabetçi fiyatlarla keşfedin.',
+    shop_now: 'Alışverişe Başla',
+    all: 'Tümü',
+    sort_default: 'Varsayılan sıralama',
+    sort_price_asc: 'Fiyat: düşükten yükseğe',
+    sort_price_desc: 'Fiyat: yüksekten düşüğe',
+    sort_name: 'İsim: A - Z',
+    sort_discount: 'En yüksek indirim',
+    products_count: '{n} ürün mevcut',
+    no_products: 'Ürün bulunamadı',
+    no_products_hint: 'Arama veya kategoriyi değiştirmeyi deneyin',
+    show_all: 'Tüm ürünleri göster',
+    recently_viewed: 'Son görüntülenenler',
+    footer_about: 'Yüksek kaliteli giyim, aksesuar ve oyuncaklar için ilk tercihiniz.',
+    footer_quick_links: 'Hızlı bağlantılar',
+    products: 'Ürünler',
+    all_categories: 'Tüm kategoriler',
+    contact_us: 'Bize ulaşın',
+    footer_support: 'Müşteri hizmetleri',
+    working_hours: 'Çalışma saatleri: 09:00 - 21:00',
+    fast_shipping: 'Tüm şehirlere hızlı kargo',
+    home: 'Ana Sayfa',
+    search: 'Ara',
+    total: 'Toplam',
+    checkout: 'Siparişi Tamamla',
+    cart_empty_title: 'Sepetiniz boş',
+    cart_empty_desc: 'Alışverişe başlamak için ürün ekleyin',
+    browse_products: 'Ürünlere göz at',
+    wishlist_empty_title: 'Favori yok',
+    wishlist_empty_desc: 'Bir ürüne kalp ikonuna tıklayarak ekleyin',
+    quick_view: 'Hızlı bakış',
+    add_to_cart: 'Sepete ekle',
+    add_more: 'Daha ekle',
+    out_of_stock: 'Stokta yok',
+    out: 'Yok',
+    available: 'Stokta',
+    last_pieces: 'Son {n} adet!',
+    free_shipping_add: 'Ücretsiz kargo için <strong>{price}</strong> daha ekleyin',
+    free_shipping_done: '🎉 Ücretsiz kargo!',
+    full_name: 'Ad Soyad',
+    phone: 'Telefon',
+    address: 'Adres',
+    notes: 'Notlar (isteğe bağlı)',
+    payment_method: 'Ödeme yöntemi',
+    cod: 'Kapıda ödeme',
+    cod_desc: 'Teslimatta ödeyin',
+    bank_transfer: 'Banka havalesi',
+    bank_desc: 'Tutarı transfer edip dekontu gönderin',
+    submit_order: 'Siparişi gönder',
+    name_placeholder: 'Adınızı girin',
+    phone_placeholder: '05XXXXXXXX',
+    address_placeholder: 'Şehir, mahalle, sokak, bina no',
+    notes_placeholder: 'Ek notlar',
+    err_name: 'Lütfen geçerli bir isim girin',
+    err_phone: 'Lütfen geçerli bir telefon girin',
+    err_address: 'Lütfen detaylı adres girin',
+    order_success_title: 'Teşekkürler! Siparişiniz alındı',
+    order_success_msg: 'Siparişinizi inceleyip <strong>{phone}</strong> üzerinden sizinle iletişime geçeceğiz.',
+    download_invoice: 'Faturayı indir',
+    print_invoice: 'Yazdır / PDF',
+    back_to_store: 'Mağazaya dön',
+    unit_price: 'adet',
+    category: 'Kategori',
+    stock: 'Stok',
+    loading: 'Yükleniyor...',
+    toast_added: 'Sepete eklendi',
+    toast_wishlist_add: 'Favorilere eklendi ❤️',
+    toast_wishlist_remove: 'Favorilerden çıkarıldı',
+    toast_removed: 'Sepetten silindi',
+    toast_out: 'Ürün stokta yok',
+    toast_stock: 'Stok tükendi',
+    toast_over_stock: 'Stok aşıldı',
+    toast_empty_cart: 'Sepet boş',
+    toast_fill_fields: 'Lütfen zorunlu alanları doldurun',
+    toast_order_fail: 'Sipariş gönderilemedi, tekrar deneyin',
+    toast_copied: 'Kopyalandı',
+    toast_cache: 'Son ürün listesi gösteriliyor',
+    toast_demo: 'Yükleme başarısız — demo gösteriliyor',
+    bank_info: 'Havale bilgileri',
+    bank_name: 'Banka',
+    bank_holder: 'Hesap sahibi',
+    iban: 'IBAN',
+    copy: 'Kopyala',
+    no_bank: 'Banka bilgisi henüz eklenmedi. Detay için bize ulaşın.',
+    copyright: '© {year} {store} — Tüm hakları saklıdır',
+    general: 'Genel',
+  }
+};
+
+let currentLang = localStorage.getItem(LANG_KEY) || 'ar';
+
+function t(key, params = {}) {
+  const dict = I18N[currentLang] || I18N.ar;
+  let str = dict[key] ?? I18N.ar[key] ?? key;
+  Object.keys(params).forEach(k => {
+    str = str.replace(new RegExp('\\{' + k + '\\}', 'g'), params[k]);
+  });
+  return str;
+}
+
+function setLanguage(lang) {
+  if (!I18N[lang]) return;
+  currentLang = lang;
+  localStorage.setItem(LANG_KEY, lang);
+
+  const html = document.documentElement;
+  html.lang = lang;
+  html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+  // Update lang switcher UI
+  document.querySelectorAll('#langSwitch button').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+
+  applyTranslations();
+  // Re-render dynamic parts
+  renderCategoriesStrip();
+  renderProducts();
+  renderCart();
+  renderWishlist();
+  renderRecent();
+  applySettings(); // updates announcement etc.
+}
+
+function applyTranslations() {
+  // data-i18n → textContent
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (key) el.textContent = t(key);
+  });
+  // data-i18n-html → innerHTML
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (key) el.innerHTML = t(key);
+  });
+  // data-i18n-placeholder
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (key) el.placeholder = t(key);
+  });
+  // data-i18n-title
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    const key = el.getAttribute('data-i18n-title');
+    if (key) el.title = t(key);
+  });
+  // Sort options
+  const sort = $('sortSelect');
+  if (sort) {
+    Array.from(sort.options).forEach(opt => {
+      const key = opt.getAttribute('data-i18n');
+      if (key) opt.textContent = t(key);
+    });
+  }
+  // Announcement special (contains HTML)
+  const ann = $('announcementBar');
+  if (ann) {
+    const freeMin = Number(storeSettings.free_shipping_min) || 500;
+    if (currentLang === 'tr') {
+      ann.innerHTML = `<span>${t('announcement', { min: formatPrice(freeMin) })}</span>`;
+    } else {
+      ann.innerHTML = `<span>${t('announcement').replace('500 ₺', formatPrice(freeMin))}</span>`;
+    }
+  }
+  // Title
+  document.title = (storeSettings.store_name || 'NYALA') + ' | NYALA Store';
+}
 
 /* ============================================================
    STATE
@@ -1748,7 +2036,54 @@ function debounce(fn, ms = 300) {
     let t;
     return function (...args) { clearTimeout(t); t = setTimeout(() => fn.apply(this, args), ms); };
 }
+
 function formatPrice(n) { return Number(n || 0).toLocaleString('en-US') + ' ₺'; }
+function getProductName(p) {
+    if (!p) return '';
+    if (currentLang === 'tr') return p.name_tr || p.name || '';
+    return p.name_ar || p.name || '';
+}
+function getProductDesc(p) {
+    if (!p) return '';
+    if (currentLang === 'tr') return p.desc_tr || p.desc || '';
+    return p.desc_ar || p.desc || '';
+}
+
+/** تطبيع الأقسام: يدعم ["ملابس"] أو [{ar:"ملابس",tr:"Giyim"}] */
+function normalizeCategories(raw) {
+    let list = [];
+    try {
+        if (typeof raw === 'string') list = JSON.parse(raw || '[]');
+        else if (Array.isArray(raw)) list = raw;
+    } catch (e) { list = []; }
+    if (!Array.isArray(list) || !list.length) {
+        list = [
+            { ar: 'ملابس', tr: 'Giyim' },
+            { ar: 'إكسسوارات', tr: 'Aksesuar' },
+            { ar: 'ألعاب', tr: 'Oyuncak' }
+        ];
+    }
+    return list.map(item => {
+        if (typeof item === 'string') {
+            return { ar: item, tr: item, key: item };
+        }
+        const ar = item.ar || item.name || item.key || '';
+        const tr = item.tr || item.name_tr || ar;
+        return { ar, tr, key: ar || tr };
+    }).filter(c => c.key);
+}
+
+function getCategoryLabel(keyOrObj) {
+    if (!keyOrObj) return '';
+    if (typeof keyOrObj === 'object') {
+        return currentLang === 'tr' ? (keyOrObj.tr || keyOrObj.ar) : (keyOrObj.ar || keyOrObj.tr);
+    }
+    const cats = normalizeCategories(storeSettings.categories);
+    const found = cats.find(c => c.key === keyOrObj || c.ar === keyOrObj || c.tr === keyOrObj);
+    if (found) return currentLang === 'tr' ? found.tr : found.ar;
+    return String(keyOrObj);
+}
+
 function getWhatsAppNumber() { return storeSettings.whatsapp_number || '905550196682'; }
 function scrollToTop(e) { if (e) e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
 function focusMobileSearch() {
@@ -1761,20 +2096,15 @@ function focusMobileSearch() {
 
 function showToast(msg, type = '') {
     const container = $('toastContainer');
-    const t = document.createElement('div');
-    t.className = 'toast ' + type;
-    const iconMap = {
-        success: 'fa-check-circle',
-        error: 'fa-circle-exclamation',
-        warning: 'fa-triangle-exclamation',
-        '': 'fa-info-circle'
-    };
-    t.innerHTML = `<i class="fas ${iconMap[type] || 'fa-info-circle'}"></i><span>${escapeHtml(msg)}</span>`;
-    container.appendChild(t);
-    requestAnimationFrame(() => t.classList.add('show'));
+    const toast = document.createElement('div');
+    toast.className = 'toast ' + type;
+    const iconMap = { success: 'fa-check-circle', error: 'fa-circle-exclamation', warning: 'fa-triangle-exclamation', '': 'fa-info-circle' };
+    toast.innerHTML = `<i class="fas ${iconMap[type] || 'fa-info-circle'}"></i><span>${escapeHtml(msg)}</span>`;
+    container.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add('show'));
     setTimeout(() => {
-        t.classList.remove('show');
-        setTimeout(() => t.remove(), 400);
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
     }, 3000);
 }
 
@@ -1786,7 +2116,6 @@ async function loadSettings() {
     if (cached && Date.now() - cached.time < CACHE_TTL) {
         storeSettings = Object.assign({}, DEFAULT_SETTINGS, cached.data);
         applySettings();
-        // Refresh in background
         setTimeout(() => refreshSettings(true), 800);
         return;
     }
@@ -1809,33 +2138,32 @@ async function refreshSettings(silent) {
 
 function applySettings() {
     const s = storeSettings;
-
-    // Logo & store name
     const logoUrl = s.logo_url || 'https://placehold.co/44x44/f5a623/2a1b3d?text=NY';
     const brandLogo = $('brandLogo');
     if (brandLogo) brandLogo.src = logoUrl;
     const brandName = $('brandName');
-    if (brandName) brandName.textContent = s.store_name || 'نيولا';
+    if (brandName) brandName.textContent = 'NYALA';
     const footerStoreName = $('footerStoreName');
-    if (footerStoreName) footerStoreName.textContent = s.store_name || 'متجر نيولا';
+    if (footerStoreName) footerStoreName.textContent = 'NYALA';
     const footerCopyright = $('footerCopyright');
-    if (footerCopyright) footerCopyright.textContent = '© ' + new Date().getFullYear() + ' ' + (s.store_name || 'متجر نيولا') + ' — جميع الحقوق محفوظة';
+    if (footerCopyright) {
+        footerCopyright.textContent = t('copyright', {
+            year: new Date().getFullYear(),
+            store: 'NYALA'
+        });
+    }
 
-    // WhatsApp
     const wa = getWhatsAppNumber();
     const floatWa = $('floatWaBtn');
-    if (floatWa) floatWa.href = 'https://wa.me/' + wa + '?text=' + encodeURIComponent('مرحباً، لدي استفسار');
+    if (floatWa) floatWa.href = 'https://wa.me/' + wa + '?text=' + encodeURIComponent(currentLang === 'tr' ? 'Merhaba, bir sorum var' : 'مرحباً، لدي استفسار');
     const footerWa = $('footerWa');
     if (footerWa) footerWa.href = 'https://wa.me/' + wa;
     const footerPhone = $('footerPhone');
-    if (footerPhone) footerPhone.innerHTML = '<i class="fas fa-phone"></i> اتصل: +' + wa;
+    if (footerPhone) footerPhone.innerHTML = '<i class="fas fa-phone"></i> +' + wa;
 
-    // Free shipping
     const freeMin = Number(s.free_shipping_min) || 0;
-    const annFree = $('announcementFreeMin');
-    if (annFree) annFree.textContent = formatPrice(freeMin);
+    // announcement handled in applyTranslations
 
-    // Payment methods visibility
     const codEnabled = s.payment_cod_enabled !== 'false';
     const bankEnabled = s.payment_bank_enabled === 'true';
     const codOpt = document.querySelector('.payment-option[data-method="cod"]');
@@ -1843,7 +2171,6 @@ function applySettings() {
     if (codOpt) codOpt.style.display = codEnabled ? '' : 'none';
     if (bankOpt) bankOpt.style.display = bankEnabled ? '' : 'none';
 
-    // If only bank enabled, preselect it
     if (!codEnabled && bankEnabled && bankOpt) {
         document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
         bankOpt.classList.add('selected');
@@ -1857,35 +2184,32 @@ function applySettings() {
         if (input) input.checked = true;
     }
 
-    // Categories
     renderCategoriesStrip();
-
-    // Re-render cart (uses free shipping)
     renderCart();
+    applyTranslations();
 }
 
 function renderCategoriesStrip() {
-    let cats = [];
-    try { cats = JSON.parse(storeSettings.categories || '[]'); } catch {}
-    if (!Array.isArray(cats) || !cats.length) cats = ['ملابس', 'إكسسوارات', 'ألعاب'];
+    const cats = normalizeCategories(storeSettings.categories);
 
     const EMOJI = {
         'ملابس':'👕', 'إكسسوارات':'💍', 'ألعاب':'🎮', 'عطور':'🌸',
         'أحذية':'👟', 'حقائب':'👜', 'إلكترونيات':'📱', 'منزل':'🏠',
-        'طعام':'🍽️', 'رياضة':'⚽', 'كتب':'📚', 'تجميل':'💄'
+        'طعام':'🍽️', 'رياضة':'⚽', 'كتب':'📚', 'تجميل':'💄',
+        'Giyim':'👕', 'Aksesuar':'💍', 'Oyuncak':'🎮'
     };
 
     const strip = $('categoryStrip');
-    let html = '<button class="' + (currentCat === 'all' ? 'active' : '') + '" data-cat="all">🏪 الكل</button>';
+    let html = `<button class="${currentCat === 'all' ? 'active' : ''}" data-cat="all">🏪 ${t('all')}</button>`;
     cats.forEach(cat => {
-        const isActive = currentCat === cat ? 'active' : '';
-        const emoji = EMOJI[cat] || '📦';
-        html += `<button class="${isActive}" data-cat="${escapeHtml(cat)}">${emoji} ${escapeHtml(cat)}</button>`;
+        const isActive = currentCat === cat.key ? 'active' : '';
+        const label = currentLang === 'tr' ? cat.tr : cat.ar;
+        const emoji = EMOJI[cat.ar] || EMOJI[cat.tr] || '📦';
+        html += `<button class="${isActive}" data-cat="${escapeHtml(cat.key)}">${emoji} ${escapeHtml(label)}</button>`;
     });
     strip.innerHTML = html;
 
-    // Validate currentCat
-    if (currentCat !== 'all' && !cats.includes(currentCat)) {
+    if (currentCat !== 'all' && !cats.some(c => c.key === currentCat)) {
         currentCat = 'all';
     }
 }
@@ -1919,11 +2243,11 @@ async function fetchProducts(force = false) {
             if (cached && cached.data) {
                 products = cached.data;
                 renderProducts();
-                showToast('عرض آخر نسخة من المنتجات', 'warning');
+                showToast(t('toast_cache'), 'warning');
             } else {
                 products = getDemoProducts();
                 renderProducts();
-                showToast('تعذر التحميل — عرض تجريبي', 'error');
+                showToast(t('toast_demo'), 'error');
             }
         }
     }
@@ -1931,9 +2255,9 @@ async function fetchProducts(force = false) {
 
 function getDemoProducts() {
     return [
-        { id:'1', name:'تيشيرت نيولا كلاسيك', price:149, oldPrice:199, category:'ملابس', desc:'قماش قطني فاخر', stock:10, visible:'true', image:'https://placehold.co/400x400/a239ca/white?text=Tshirt' },
-        { id:'2', name:'سوار فضي أنيق', price:89, category:'إكسسوارات', desc:'تصميم عصري', stock:5, visible:'true', image:'https://placehold.co/400x400/f5a623/white?text=Bracelet' },
-        { id:'3', name:'لعبة الألغاز الذكية', price:59, oldPrice:79, category:'ألعاب', desc:'لجميع الأعمار', stock:0, visible:'true', image:'https://placehold.co/400x400/2a1b3d/white?text=Puzzle' }
+        { id:'1', name:'تيشيرت نيولا كلاسيك', name_tr:'NYALA Klasik Tişört', price:149, oldPrice:199, category:'ملابس', desc:'قماش قطني فاخر', desc_tr:'Premium pamuk kumaş', stock:10, visible:'true', image:'https://placehold.co/400x400/a239ca/white?text=Tshirt' },
+        { id:'2', name:'سوار فضي أنيق', name_tr:'Zarif Gümüş Bileklik', price:89, category:'إكسسوارات', desc:'تصميم عصري', desc_tr:'Modern tasarım', stock:5, visible:'true', image:'https://placehold.co/400x400/f5a623/white?text=Bracelet' },
+        { id:'3', name:'لعبة الألغاز الذكية', name_tr:'Akıllı Puzzle Oyunu', price:59, oldPrice:79, category:'ألعاب', desc:'لجميع الأعمار', desc_tr:'Her yaş için', stock:0, visible:'true', image:'https://placehold.co/400x400/2a1b3d/white?text=Puzzle' }
     ];
 }
 
@@ -1961,19 +2285,28 @@ function isVisible(p) {
 
 function getFilteredProducts() {
     let list = products.filter(isVisible);
-    if (currentCat !== 'all') list = list.filter(p => p.category === currentCat);
+    if (currentCat !== 'all') {
+        list = list.filter(p => {
+            const c = p.category || '';
+            return c === currentCat || getCategoryLabel(c) === currentCat;
+        });
+    }
     if (currentSearch.trim()) {
-        const t = currentSearch.toLowerCase();
+        const term = currentSearch.toLowerCase();
         list = list.filter(p =>
-            (p.name || '').toLowerCase().includes(t) ||
-            (p.desc || '').toLowerCase().includes(t) ||
-            (p.category || '').toLowerCase().includes(t)
+            (getProductName(p) || '').toLowerCase().includes(term) ||
+            (getProductDesc(p) || '').toLowerCase().includes(term) ||
+            (p.name || '').toLowerCase().includes(term) ||
+            (p.name_tr || '').toLowerCase().includes(term) ||
+            (p.desc || '').toLowerCase().includes(term) ||
+            (p.desc_tr || '').toLowerCase().includes(term) ||
+            (p.category || '').toLowerCase().includes(term)
         );
     }
     switch (currentSort) {
         case 'price-asc':  list.sort((a,b) => Number(a.price) - Number(b.price)); break;
         case 'price-desc': list.sort((a,b) => Number(b.price) - Number(a.price)); break;
-        case 'name-asc':   list.sort((a,b) => String(a.name).localeCompare(String(b.name), 'ar')); break;
+        case 'name-asc':   list.sort((a,b) => String(getProductName(a)).localeCompare(String(getProductName(b)), currentLang === 'tr' ? 'tr' : 'ar')); break;
         case 'discount':
             list.sort((a,b) => {
                 const da = a.oldPrice ? (a.oldPrice - a.price) / a.oldPrice : 0;
@@ -2007,14 +2340,14 @@ function renderProducts() {
     const list = getFilteredProducts();
     const grid = $('productsGrid');
     const countEl = $('resultsCount');
-    if (countEl) countEl.innerHTML = `<strong>${list.length}</strong> منتج متوفر`;
+    if (countEl) countEl.innerHTML = t('products_count', { n: `<strong>${list.length}</strong>` });
 
     if (!list.length) {
         grid.innerHTML = `<div class="empty-state">
             <span class="emoji">🔍</span>
-            <h3>لا توجد منتجات</h3>
-            <p>جرّب تغيير البحث أو الفئة</p>
-            <button onclick="resetFilters()">عرض كل المنتجات</button>
+            <h3>${t('no_products')}</h3>
+            <p>${t('no_products_hint')}</p>
+            <button onclick="resetFilters()">${t('show_all')}</button>
         </div>`;
         return;
     }
@@ -2033,9 +2366,9 @@ function productCardHTML(p) {
     const lowStock = stock > 0 && stock <= 5;
     const img = p.image || 'https://placehold.co/400x400/eee/999?text=No+Image';
 
-    let stockClass = 'in-stock', stockText = `متوفر (${stock})`;
-    if (outOfStock) { stockClass = 'out-of-stock'; stockText = 'نفذ المخزون'; }
-    else if (lowStock) { stockClass = 'low'; stockText = `آخر ${stock} قطع!`; }
+    let stockClass = 'in-stock', stockText = `${t('available')} (${stock})`;
+    if (outOfStock) { stockClass = 'out-of-stock'; stockText = t('out_of_stock'); }
+    else if (lowStock) { stockClass = 'low'; stockText = t('last_pieces', { n: stock }); }
 
     return `
     <div class="product-card">
@@ -2043,19 +2376,19 @@ function productCardHTML(p) {
             <img src="${img}" alt="${escapeHtml(p.name)}" loading="lazy"
                  onerror="this.onerror=null;this.src='https://placehold.co/400x400/eee/999?text=No+Image'">
             ${hasDiscount ? `<span class="badge-discount">-${discountPct}%</span>` : ''}
-            <button class="wishlist-btn ${isWish ? 'active' : ''}" onclick="event.stopPropagation(); toggleWishItem('${p.id}')" aria-label="المفضلة">
+            <button class="wishlist-btn ${isWish ? 'active' : ''}" onclick="event.stopPropagation(); toggleWishItem('${p.id}')" aria-label="wishlist">
                 <i class="${isWish ? 'fas' : 'far'} fa-heart"></i>
             </button>
-            ${outOfStock ? `<div class="badge-out">نفذ المخزون</div>` : `
+            ${outOfStock ? `<div class="badge-out">${t('out_of_stock')}</div>` : `
                 <div class="quick-view-overlay">
                     <button class="quick-view-btn" onclick="event.stopPropagation(); openQuickView('${p.id}')">
-                        <i class="fas fa-eye"></i> نظرة سريعة
+                        <i class="fas fa-eye"></i> ${t('quick_view')}
                     </button>
                 </div>`}
         </div>
         <div class="card-body">
-            <h3 title="${escapeHtml(p.name)}">${escapeHtml(p.name)}</h3>
-            <div class="desc">${escapeHtml(p.desc || '')}</div>
+            <h3 title="${escapeHtml(getProductName(p))}">${escapeHtml(getProductName(p))}</h3>
+            <div class="desc">${escapeHtml(getProductDesc(p))}</div>
             <div class="price-row">
                 <span class="price">${formatPrice(p.price)}</span>
                 ${hasDiscount ? `<span class="old-price">${formatPrice(p.oldPrice)}</span>` : ''}
@@ -2071,7 +2404,7 @@ function productCardHTML(p) {
                     <button onclick="updateQty('${p.id}',1)" ${cartQty >= stock ? 'disabled' : ''}>+</button>
                 </div>` : ''}
                 <button class="add-to-cart" onclick="addToCart('${p.id}', this)" ${outOfStock ? 'disabled' : ''}>
-                    <i class="fas fa-cart-plus"></i> ${outOfStock ? 'نفذ' : (cartQty > 0 ? 'أضف المزيد' : 'أضف للسلة')}
+                    <i class="fas fa-cart-plus"></i> ${outOfStock ? t('out') : (cartQty > 0 ? t('add_more') : t('add_to_cart'))}
                 </button>
             </div>
         </div>
@@ -2085,21 +2418,21 @@ function addToCart(prodId, btn) {
     const product = products.find(p => p.id == prodId);
     if (!product) return;
     const stock = Number(product.stock) || 0;
-    if (stock <= 0) { showToast('المنتج غير متوفر', 'error'); return; }
+    if (stock <= 0) { showToast(t('toast_out'), 'error'); return; }
     const existing = cart.find(c => c.prodId == prodId);
     const currentQty = existing ? existing.qty : 0;
-    if (currentQty >= stock) { showToast('الكمية استُنفدت', 'warning'); return; }
+    if (currentQty >= stock) { showToast(t('toast_stock'), 'warning'); return; }
     if (existing) existing.qty++;
     else cart.push({ prodId: String(prodId), qty: 1 });
     saveCart(); renderCart(); renderProducts();
     if (btn) {
         const orig = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-check"></i> تمت الإضافة';
+        btn.innerHTML = '<i class="fas fa-check"></i>';
         btn.disabled = true;
         setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 900);
     }
     bounceBadge('cartBadge'); bounceBadge('cartBadgeBottom');
-    showToast('تمت الإضافة للسلة', 'success');
+    showToast(t('toast_added'), 'success');
 }
 
 function updateQty(prodId, delta) {
@@ -2107,7 +2440,7 @@ function updateQty(prodId, delta) {
     if (!item) return;
     const p = products.find(pr => pr.id == prodId);
     const stock = p ? (Number(p.stock) || 0) : 999;
-    if (delta > 0 && item.qty + delta > stock) { showToast('تجاوز المخزون', 'warning'); return; }
+    if (delta > 0 && item.qty + delta > stock) { showToast(t('toast_over_stock'), 'warning'); return; }
     item.qty += delta;
     if (item.qty <= 0) removeFromCart(prodId);
     else { saveCart(); renderCart(); renderProducts(); }
@@ -2116,7 +2449,7 @@ function updateQty(prodId, delta) {
 function removeFromCart(prodId) {
     cart = cart.filter(c => c.prodId != prodId);
     saveCart(); renderCart(); renderProducts();
-    showToast('تم الحذف من السلة', '');
+    showToast(t('toast_removed'), '');
 }
 
 function saveCart() { saveLS('nyala_cart', cart); updateBadges(); }
@@ -2163,9 +2496,9 @@ function renderCart() {
     if (!cart.length) {
         container.innerHTML = `<div class="cart-empty">
             <span class="emoji">🛒</span>
-            <h4>سلتك فارغة</h4>
-            <p>أضف بعض المنتجات لتبدأ التسوق</p>
-            <button onclick="toggleCart()">تصفّح المنتجات</button>
+            <h4>${t('cart_empty_title')}</h4>
+            <p>${t('cart_empty_desc')}</p>
+            <button onclick="toggleCart()">${t('browse_products')}</button>
         </div>`;
         if (footer) footer.style.display = 'none';
         if (shipBar) shipBar.style.display = 'none';
@@ -2176,7 +2509,6 @@ function renderCart() {
     if (footer) footer.style.display = 'block';
     const total = getCartTotal();
 
-    // Free shipping bar
     const freeMin = Number(storeSettings.free_shipping_min) || 0;
     if (shipBar) {
         if (freeMin > 0) {
@@ -2185,7 +2517,7 @@ function renderCart() {
             const pct = Math.min(100, (total / freeMin) * 100);
             shipBar.innerHTML = `
                 <div class="text">
-                    <span>${remaining > 0 ? `أضف <strong>${formatPrice(remaining)}</strong> للشحن المجاني` : '🎉 شحن مجاني!'}</span>
+                    <span>${remaining > 0 ? t('free_shipping_add', { price: formatPrice(remaining) }) : t('free_shipping_done')}</span>
                     <span>${Math.round(pct)}%</span>
                 </div>
                 <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>`;
@@ -2205,8 +2537,8 @@ function renderCart() {
             <img src="${p.image || 'https://placehold.co/55'}" alt="${escapeHtml(p.name)}" loading="lazy"
                  onerror="this.src='https://placehold.co/55/eee/999?text=No'">
             <div class="info">
-                <strong>${escapeHtml(p.name)}</strong>
-                <div class="unit-price">${formatPrice(p.price)} للقطعة</div>
+                <strong>${escapeHtml(getProductName(p))}</strong>
+                <div class="unit-price">${formatPrice(p.price)} ${t('unit_price')}</div>
                 <div class="qty-control">
                     <button onclick="updateQty('${c.prodId}',-1)">−</button>
                     <span>${c.qty}</span>
@@ -2215,7 +2547,7 @@ function renderCart() {
             </div>
             <div class="item-actions">
                 <span class="subtotal">${formatPrice(sub)}</span>
-                <button class="remove-btn" onclick="removeFromCart('${c.prodId}')" title="حذف">
+                <button class="remove-btn" onclick="removeFromCart('${c.prodId}')" title="remove">
                     <i class="fas fa-trash-can"></i>
                 </button>
             </div>
@@ -2244,8 +2576,8 @@ function toggleCart() {
 function toggleWishItem(prodId) {
     const id = String(prodId);
     const idx = wishlist.indexOf(id);
-    if (idx >= 0) { wishlist.splice(idx, 1); showToast('حُذف من المفضلة', ''); }
-    else { wishlist.push(id); showToast('أُضيف للمفضلة ❤️', 'success'); }
+    if (idx >= 0) { wishlist.splice(idx, 1); showToast(t('toast_wishlist_remove'), ''); }
+    else { wishlist.push(id); showToast(t('toast_wishlist_add'), 'success'); }
     saveLS('nyala_wishlist', wishlist);
     updateBadges(); renderProducts(); renderWishlist();
 }
@@ -2256,15 +2588,15 @@ function renderWishlist() {
     if (!wishlist.length) {
         container.innerHTML = `<div class="cart-empty">
             <span class="emoji">❤️</span>
-            <h4>لا توجد مفضلات</h4>
-            <p>اضغط على القلب في أي منتج لإضافته هنا</p>
-            <button onclick="toggleWishlist()">تصفّح المنتجات</button>
+            <h4>${t('wishlist_empty_title')}</h4>
+            <p>${t('wishlist_empty_desc')}</p>
+            <button onclick="toggleWishlist()">${t('browse_products')}</button>
         </div>`;
         return;
     }
     const items = wishlist.map(id => products.find(p => String(p.id) === id)).filter(Boolean);
     if (!items.length) {
-        container.innerHTML = '<div class="cart-empty"><p>لا توجد منتجات مفضلة</p></div>';
+        container.innerHTML = '<div class="cart-empty"><p>—</p></div>';
         return;
     }
     container.innerHTML = items.map(p => `
@@ -2272,13 +2604,13 @@ function renderWishlist() {
             <img src="${p.image || 'https://placehold.co/55'}" alt="${escapeHtml(p.name)}" loading="lazy"
                  onerror="this.src='https://placehold.co/55/eee/999?text=No'">
             <div class="info">
-                <strong>${escapeHtml(p.name)}</strong>
+                <strong>${escapeHtml(getProductName(p))}</strong>
                 <div class="unit-price">${formatPrice(p.price)}</div>
             </div>
             <div class="item-actions">
                 <button class="add-to-cart" style="padding:8px 12px;font-size:0.78rem;width:auto;"
                         onclick="addToCart('${p.id}')">
-                    <i class="fas fa-cart-plus"></i> أضف
+                    <i class="fas fa-cart-plus"></i> ${t('add_to_cart')}
                 </button>
                 <button class="remove-btn" onclick="toggleWishItem('${p.id}')">
                     <i class="fas fa-heart-broken"></i>
@@ -2324,7 +2656,7 @@ function renderRecent() {
             <img src="${p.image || 'https://placehold.co/200'}" loading="lazy"
                  onerror="this.src='https://placehold.co/200/eee/999?text=No'">
             <div class="rc-body">
-                <div class="rc-name">${escapeHtml(p.name)}</div>
+                <div class="rc-name">${escapeHtml(getProductName(p))}</div>
                 <div class="rc-price">${formatPrice(p.price)}</div>
             </div>
         </div>`).join('');
@@ -2346,19 +2678,19 @@ function openQuickView(prodId) {
         <div class="quick-view-grid">
             <div class="quick-view-img"><img src="${img}" alt="${escapeHtml(p.name)}"></div>
             <div class="quick-view-info">
-                <h2>${escapeHtml(p.name)}</h2>
+                <h2>${escapeHtml(getProductName(p))}</h2>
                 <div class="qv-price">
                     ${hasDiscount ? `<span class="old">${formatPrice(p.oldPrice)}</span>` : ''}
                     ${formatPrice(p.price)}
                 </div>
-                <div class="qv-desc">${escapeHtml(p.desc || 'لا يوجد وصف متاح لهذا المنتج.')}</div>
+                <div class="qv-desc">${escapeHtml(getProductDesc(p))}</div>
                 <div class="qv-meta">
-                    <span><i class="fas fa-tag"></i> ${escapeHtml(p.category || 'عام')}</span>
-                    <span><i class="fas fa-box"></i> ${stock > 0 ? `متوفر (${stock})` : 'نفذ'}</span>
+                    <span><i class="fas fa-tag"></i> ${escapeHtml(getCategoryLabel(p.category) || t('general'))}</span>
+                    <span><i class="fas fa-box"></i> ${stock > 0 ? `${t('available')} (${stock})` : t('out_of_stock')}</span>
                 </div>
                 <div class="qv-actions">
                     <button class="add-to-cart" onclick="addToCart('${p.id}', this); closeQuickView();" ${out ? 'disabled' : ''}>
-                        <i class="fas fa-cart-plus"></i> ${out ? 'نفذ المخزون' : 'أضف للسلة'}
+                        <i class="fas fa-cart-plus"></i> ${out ? t('out_of_stock') : t('add_to_cart')}
                     </button>
                 </div>
             </div>
@@ -2374,11 +2706,10 @@ function closeQuickView() {
    CHECKOUT
    ============================================================ */
 function openCheckout() {
-    if (!cart.length) { showToast('السلة فارغة', 'warning'); return; }
+    if (!cart.length) { showToast(t('toast_empty_cart'), 'warning'); return; }
     $('cartDrawer').classList.remove('open');
     $('cartOverlay').classList.remove('open');
 
-    // Reset UI state
     $('checkoutFormBody').style.display = 'block';
     $('checkoutSuccessScreen').style.display = 'none';
     $('checkoutFooter').style.display = 'block';
@@ -2386,36 +2717,33 @@ function openCheckout() {
     if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.style.display = 'flex';
-        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب';
+        submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> <span>${t('submit_order')}</span>`;
     }
 
-    // Build summary
     let html = '';
     cart.forEach(c => {
         const p = products.find(pr => pr.id == c.prodId);
         if (p) {
             const sub = p.price * c.qty;
-            html += `<div class="item"><span class="name">${escapeHtml(p.name)} × ${c.qty}</span><span>${formatPrice(sub)}</span></div>`;
+            html += `<div class="item"><span class="name">${escapeHtml(getProductName(p))} × ${c.qty}</span><span>${formatPrice(sub)}</span></div>`;
         }
     });
-    html += `<div class="item grand"><span>الإجمالي</span><span>${formatPrice(getCartTotal())}</span></div>`;
+    html += `<div class="item grand"><span>${t('total')}</span><span>${formatPrice(getCartTotal())}</span></div>`;
     $('orderSummary').innerHTML = html;
 
-    // Bank details
     const s = storeSettings;
     const bankEl = $('bankDetails');
     if (s.bank_name || s.bank_iban) {
         bankEl.innerHTML = `
-            <strong><i class="fas fa-university"></i> بيانات التحويل:</strong><br>
-            البنك: <strong>${escapeHtml(s.bank_name || '—')}</strong><br>
-            صاحب الحساب: <strong>${escapeHtml(s.bank_holder || '—')}</strong><br>
-            IBAN: <code>${escapeHtml(s.bank_iban || '—')}</code>
-            <button type="button" class="copy-btn" onclick="copyText('${escapeHtml((s.bank_iban || '').replace(/'/g, ''))}')">نسخ</button>`;
+            <strong><i class="fas fa-university"></i> ${t('bank_info')}:</strong><br>
+            ${t('bank_name')}: <strong>${escapeHtml(s.bank_name || '—')}</strong><br>
+            ${t('bank_holder')}: <strong>${escapeHtml(s.bank_holder || '—')}</strong><br>
+            ${t('iban')}: <code>${escapeHtml(s.bank_iban || '—')}</code>
+            <button type="button" class="copy-btn" onclick="copyText('${escapeHtml((s.bank_iban || '').replace(/'/g, ''))}')">${t('copy')}</button>`;
     } else {
-        bankEl.innerHTML = '<small>لم تُضف بيانات بنكية بعد. تواصل معنا للتفاصيل.</small>';
+        bankEl.innerHTML = `<small>${t('no_bank')}</small>`;
     }
 
-    // Reset error states
     ['custName','custPhone','custAddress'].forEach(id => {
         const el = $(id);
         if (el) el.classList.remove('error');
@@ -2432,7 +2760,7 @@ function closeCheckout() {
 
 function copyText(text) {
     if (!text) return;
-    navigator.clipboard?.writeText(text).then(() => showToast('تم النسخ', 'success'));
+    navigator.clipboard?.writeText(text).then(() => showToast(t('toast_copied'), 'success'));
 }
 
 document.querySelectorAll('.payment-option').forEach(opt => {
@@ -2465,18 +2793,19 @@ async function submitOrder(btn) {
     const okP = validateField('custPhone',   'errPhone',   v => v.length >= 7);
     const okA = validateField('custAddress', 'errAddress', v => v.length >= 5);
     if (!okN || !okP || !okA) {
-        showToast('يرجى تعبئة الحقول المطلوبة', 'warning');
+        showToast(t('toast_fill_fields'), 'warning');
         return;
     }
 
     btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> جارٍ إرسال الطلب...';
+    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> ...';
 
     const items = cart.map(c => {
         const p = products.find(pr => pr.id == c.prodId);
         return {
             prodId: String(c.prodId),
-            name: p?.name || '',
+            name: p?.name || p?.name_ar || '',
+            name_tr: p?.name_tr || '',
             price: p?.price || 0,
             qty: c.qty
         };
@@ -2494,42 +2823,38 @@ async function submitOrder(btn) {
             })
         });
         const data = await res.json();
-        if (!data || !data.success) throw new Error(data?.error || 'فشل الإرسال');
+        if (!data || !data.success) throw new Error(data?.error || 'fail');
 
-        // Save order for receipt
         lastOrder = {
             orderId: data.orderId,
             name, phone, address, notes,
-            payment: method === 'cod' ? 'الدفع عند الاستلام' : 'تحويل بنكي',
+            payment: method === 'cod' ? t('cod') : t('bank_transfer'),
             paymentCode: method,
             items: data.items || items,
             total: data.total || total,
             date: new Date().toISOString(),
-            storeName: data.storeName || storeSettings.store_name || 'متجر نيولا',
+            storeName: data.storeName || storeSettings.store_name || 'NYALA',
             logoUrl: data.logoUrl || storeSettings.logo_url || '',
             whatsapp: data.whatsapp || getWhatsAppNumber()
         };
 
-        // Clear cart
         cart = [];
         saveLS('nyala_cart', cart);
         updateBadges();
         renderCart();
 
-        // Clear caches so stock refreshes
         try {
             localStorage.removeItem(CACHE_KEY);
             localStorage.removeItem(SETTINGS_CACHE);
         } catch (e) {}
 
-        // Show success
         showOrderSuccess(lastOrder);
         fetchProducts(true);
     } catch (err) {
         console.error(err);
-        showToast('فشل إرسال الطلب، حاول مرة أخرى', 'error');
+        showToast(t('toast_order_fail'), 'error');
         btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب';
+        btn.innerHTML = `<i class="fas fa-paper-plane"></i> <span>${t('submit_order')}</span>`;
     }
 }
 
@@ -2541,20 +2866,19 @@ function showOrderSuccess(order) {
     screen.innerHTML = `
         <div class="success-screen">
             <div class="check-circle"><i class="fas fa-check"></i></div>
-            <h2>شكراً لك! تم استلام طلبك</h2>
+            <h2>${t('order_success_title')}</h2>
             <div class="order-num">${escapeHtml(order.orderId)}</div>
-            <p>سنقوم بمراجعة طلبك والتواصل معك على <strong>${escapeHtml(order.phone)}</strong> قريباً.</p>
-            <p style="font-size:0.82rem;margin-top:-8px;">يمكنك تحميل فاتورتك والاحتفاظ بها للرجوع إليها لاحقاً.</p>
+            <p>${t('order_success_msg', { phone: escapeHtml(order.phone) })}</p>
             <div class="success-btns">
                 <button class="btn-receipt-primary" onclick="downloadLastReceipt()">
-                    <i class="fas fa-download"></i> تحميل الفاتورة
+                    <i class="fas fa-download"></i> ${t('download_invoice')}
                 </button>
                 <button class="btn-receipt-secondary" onclick="printLastReceipt()">
-                    <i class="fas fa-print"></i> طباعة / PDF
+                    <i class="fas fa-print"></i> ${t('print_invoice')}
                 </button>
             </div>
             <button class="btn-back-store" onclick="finishOrder()">
-                العودة للمتجر
+                ${t('back_to_store')}
             </button>
         </div>`;
 }
@@ -2570,10 +2894,10 @@ function finishOrder() {
 }
 
 /* ============================================================
-   RECEIPT
+   RECEIPT (simplified – uses same language)
    ============================================================ */
 function buildReceiptHTML(order) {
-    const date = new Date(order.date).toLocaleString('ar-EG', {
+    const date = new Date(order.date).toLocaleString(currentLang === 'tr' ? 'tr-TR' : 'ar-EG', {
         year: 'numeric', month: 'long', day: 'numeric',
         hour: '2-digit', minute: '2-digit'
     });
@@ -2586,11 +2910,11 @@ function buildReceiptHTML(order) {
         </tr>`).join('');
 
     return `<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="${currentLang}" dir="${currentLang === 'ar' ? 'rtl' : 'ltr'}">
 <head>
 <meta charset="UTF-8">
-<title>فاتورة ${escapeHtml(order.orderId)}</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Alexandria:wght@700;900&display=swap" rel="stylesheet">
+<title>${escapeHtml(order.orderId)}</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Alexandria:wght@700;900&display=swap" rel="stylesheet">
 <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     body{font-family:'Tajawal',sans-serif;background:#f4f0ec;padding:24px 14px;color:#2c3e4a;}
@@ -2598,18 +2922,16 @@ function buildReceiptHTML(order) {
     .header{background:linear-gradient(135deg,#2a1b3d,#a239ca);color:#fff;padding:26px 22px;text-align:center;}
     .header img{height:56px;border-radius:12px;margin-bottom:10px;background:rgba(255,255,255,0.1);padding:4px;}
     .header h1{font-family:'Alexandria';font-size:1.5rem;margin-bottom:6px;}
-    .header p{opacity:0.9;font-size:0.9rem;}
     .header .oid{background:rgba(255,255,255,0.2);padding:6px 16px;border-radius:50px;display:inline-block;font-weight:700;margin-top:10px;font-family:'Alexandria';font-size:0.9rem;}
     .body{padding:24px;}
     .section{margin-bottom:22px;}
     .section h3{color:#2a1b3d;font-size:1rem;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid #f5a623;}
     .info-row{display:flex;justify-content:space-between;padding:6px 0;font-size:0.9rem;gap:10px;}
     .info-row .lbl{color:#7a8896;font-weight:600;}
-    .info-row .val{font-weight:700;color:#2a1b3d;text-align:left;max-width:65%;word-break:break-word;}
+    .info-row .val{font-weight:700;color:#2a1b3d;text-align:start;max-width:65%;word-break:break-word;}
     table{width:100%;border-collapse:collapse;font-size:0.88rem;}
     thead tr{background:#f8f6f2;}
-    th{padding:10px;text-align:right;color:#2a1b3d;font-weight:800;}
-    th:nth-child(2),th:nth-child(3),th:nth-child(4){text-align:center;}
+    th{padding:10px;text-align:start;color:#2a1b3d;font-weight:800;}
     .total{display:flex;justify-content:space-between;padding:14px 10px;font-size:1.15rem;font-weight:900;background:#faf9f7;border-radius:10px;margin-top:12px;color:#a239ca;}
     .footer{text-align:center;padding:16px;background:#f8f6f2;font-size:0.8rem;color:#7a8896;line-height:1.8;}
     .print-btn{display:block;margin:16px auto 0;background:#a239ca;color:#fff;border:none;padding:11px 26px;border-radius:50px;font-weight:700;cursor:pointer;font-family:inherit;font-size:0.9rem;}
@@ -2621,35 +2943,33 @@ function buildReceiptHTML(order) {
     <div class="header">
         ${order.logoUrl ? `<img src="${order.logoUrl}" alt="">` : ''}
         <h1>${escapeHtml(order.storeName)}</h1>
-        <p>فاتورة طلب</p>
         <div class="oid">${escapeHtml(order.orderId)}</div>
     </div>
     <div class="body">
         <div class="section">
-            <h3>📋 بيانات الطلب</h3>
-            <div class="info-row"><span class="lbl">التاريخ:</span><span class="val">${date}</span></div>
-            <div class="info-row"><span class="lbl">طريقة الدفع:</span><span class="val">${escapeHtml(order.payment)}</span></div>
+            <h3>📋 ${currentLang === 'tr' ? 'Sipariş Bilgileri' : 'بيانات الطلب'}</h3>
+            <div class="info-row"><span class="lbl">${currentLang === 'tr' ? 'Tarih' : 'التاريخ'}:</span><span class="val">${date}</span></div>
+            <div class="info-row"><span class="lbl">${currentLang === 'tr' ? 'Ödeme' : 'طريقة الدفع'}:</span><span class="val">${escapeHtml(order.payment)}</span></div>
         </div>
         <div class="section">
-            <h3>👤 بيانات العميل</h3>
-            <div class="info-row"><span class="lbl">الاسم:</span><span class="val">${escapeHtml(order.name)}</span></div>
-            <div class="info-row"><span class="lbl">الهاتف:</span><span class="val">${escapeHtml(order.phone)}</span></div>
-            <div class="info-row"><span class="lbl">العنوان:</span><span class="val">${escapeHtml(order.address)}</span></div>
-            ${order.notes ? `<div class="info-row"><span class="lbl">ملاحظات:</span><span class="val">${escapeHtml(order.notes)}</span></div>` : ''}
+            <h3>👤 ${currentLang === 'tr' ? 'Müşteri' : 'بيانات العميل'}</h3>
+            <div class="info-row"><span class="lbl">${currentLang === 'tr' ? 'Ad' : 'الاسم'}:</span><span class="val">${escapeHtml(order.name)}</span></div>
+            <div class="info-row"><span class="lbl">${currentLang === 'tr' ? 'Telefon' : 'الهاتف'}:</span><span class="val">${escapeHtml(order.phone)}</span></div>
+            <div class="info-row"><span class="lbl">${currentLang === 'tr' ? 'Adres' : 'العنوان'}:</span><span class="val">${escapeHtml(order.address)}</span></div>
         </div>
         <div class="section">
-            <h3>🛍️ المنتجات</h3>
+            <h3>🛍️ ${currentLang === 'tr' ? 'Ürünler' : 'المنتجات'}</h3>
             <table>
-                <thead><tr><th>المنتج</th><th>الكمية</th><th>السعر</th><th>الإجمالي</th></tr></thead>
+                <thead><tr><th>${currentLang === 'tr' ? 'Ürün' : 'المنتج'}</th><th>${currentLang === 'tr' ? 'Adet' : 'الكمية'}</th><th>${currentLang === 'tr' ? 'Fiyat' : 'السعر'}</th><th>${currentLang === 'tr' ? 'Toplam' : 'الإجمالي'}</th></tr></thead>
                 <tbody>${rows}</tbody>
             </table>
-            <div class="total"><span>الإجمالي النهائي</span><span>${Number(order.total || 0).toLocaleString()} ₺</span></div>
+            <div class="total"><span>${t('total')}</span><span>${Number(order.total || 0).toLocaleString()} ₺</span></div>
         </div>
-        <button class="print-btn" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+        <button class="print-btn" onclick="window.print()">🖨️ ${t('print_invoice')}</button>
     </div>
     <div class="footer">
-        شكراً لثقتك بـ ${escapeHtml(order.storeName)}
-        ${order.whatsapp ? '<br>للاستفسار: +' + escapeHtml(order.whatsapp) : ''}
+        ${escapeHtml(order.storeName)}
+        ${order.whatsapp ? '<br>+' + escapeHtml(order.whatsapp) : ''}
     </div>
 </div>
 </body>
@@ -2657,37 +2977,34 @@ function buildReceiptHTML(order) {
 }
 
 function downloadLastReceipt() {
-    if (!lastOrder) { showToast('لا توجد فاتورة', 'warning'); return; }
+    if (!lastOrder) return;
     const blob = new Blob([buildReceiptHTML(lastOrder)], { type: 'text/html;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'فاتورة-' + lastOrder.orderId + '.html';
+    a.download = 'invoice-' + lastOrder.orderId + '.html';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    showToast('تم تحميل الفاتورة', 'success');
 }
 
 function printLastReceipt() {
-    if (!lastOrder) { showToast('لا توجد فاتورة', 'warning'); return; }
+    if (!lastOrder) return;
     const w = window.open('', '_blank');
-    if (!w) { showToast('اسمح بالنوافذ المنبثقة', 'warning'); return; }
+    if (!w) return;
     w.document.write(buildReceiptHTML(lastOrder));
     w.document.close();
     setTimeout(() => { try { w.focus(); w.print(); } catch (e) {} }, 500);
 }
 
-/* ============================================================
-   OPEN WHATSAPP
-   ============================================================ */
 function openWhatsApp() {
-    window.open('https://wa.me/' + getWhatsAppNumber() + '?text=' + encodeURIComponent('مرحباً، لدي استفسار'), '_blank');
+    const msg = currentLang === 'tr' ? 'Merhaba, bir sorum var' : 'مرحباً، لدي استفسار';
+    window.open('https://wa.me/' + getWhatsAppNumber() + '?text=' + encodeURIComponent(msg), '_blank');
 }
 
 /* ============================================================
-   SEARCH & CATEGORIES
+   SEARCH & EVENTS
    ============================================================ */
 const onSearch = debounce(function (val) {
     currentSearch = val;
@@ -2703,9 +3020,6 @@ $('categoryStrip').addEventListener('click', e => {
     if (e.target.tagName === 'BUTTON') filterCategory(e.target.dataset.cat);
 });
 
-/* ============================================================
-   SCROLL & EVENTS
-   ============================================================ */
 window.addEventListener('scroll', debounce(() => {
     const ft = $('floatTop');
     if (ft) ft.classList.toggle('show', window.scrollY > 500);
@@ -2733,6 +3047,8 @@ document.addEventListener('keydown', e => {
    INIT
    ============================================================ */
 (async function init() {
+    // Apply saved language first
+    setLanguage(currentLang);
     updateBadges();
     renderCart();
     await loadSettings();
